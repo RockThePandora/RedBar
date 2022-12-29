@@ -12,7 +12,7 @@ on:
       - '**.ps1'
       - '!build.ps1'
       - '!buildQmod.ps1'
-      - '!CreateQmod.ps1'
+      - '!createqmod.ps1'
       - '**.md'
       - '.gitignore'
   pull_request:
