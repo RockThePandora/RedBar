@@ -20,7 +20,7 @@ on:
 
 env:
     ndkname: android-ndk-r22
-    module_id: redbar
+    module_id: RedBar
     qmodName: RedBar
 
 jobs:
