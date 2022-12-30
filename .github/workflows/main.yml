@@ -1,27 +1,15 @@
 name: NDK build
 
+env:
+    module_id: RedBar
+    qmodName: RedBar
+
 on:
   workflow_dispatch:
   push:
-    branches: [master, update-1.19]
-    paths-ignore:
-      - '**.yml'
-      - '!.github/workflows/build-ndk.yml'
-      - '**.json'
-      - '!qpm.json'
-      - '**.ps1'
-      - '!build.ps1'
-      - '!buildQmod.ps1'
-      - '!createqmod.ps1'
-      - '**.md'
-      - '.gitignore'
+    branches-ignore:
+      - 'version-v*'
   pull_request:
-    branches: master
-
-env:
-    ndkname: android-ndk-r22
-    module_id: RedBar
-    qmodName: RedBar
 
 jobs:
   build:
@@ -78,10 +66,14 @@ jobs:
         ls -la ${GITHUB_WORKSPACE}/extern/libs
         echo cache:
         ls -la $HOME/.local/share/QPM-Rust/cache
+        
+    - name: Apply Legacy Fix
+      run: |
+        ./QPM/qpm-rust cache legacy-fix
     - name: Build
       run: |
         cd ${GITHUB_WORKSPACE}
-        ./QPM/qpm-rust qmod build
+        ./QPM/qpm-rust qmod build --isLibrary=true
         pwsh -Command ./build.ps1
     - name: Create Qmod
       run: |
